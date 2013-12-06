@@ -55,3 +55,7 @@ User Account Page:
 
 View a list of current polls, with the option to delete (but NOT modify) and possibly the number of views?
 Allow the ability to delete account and all polls.
+
+
+
+This is really cool. Wow. Such poll. Much amaze.
