@@ -1,5 +1,5 @@
 Design Plan for "Make a Poll" Web App
-Version 1.0
+Version 1.1
 
 Technologies Used:
 PHP
