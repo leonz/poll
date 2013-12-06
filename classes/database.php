@@ -35,7 +35,7 @@ class Database {
 	/** Closes the connection to the database */
 	public function __destruct() {
 		$mysqli->close($this->db)
-		OR die("There was a problem disconnecting from the database.");
+		OR die('There was a problem disconnecting from the database.');
 	}
 
 }
