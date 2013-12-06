@@ -2,12 +2,12 @@
 /***************************************************
  Poll Class
  Defines the class skeleton for polls.
- Version 1.0 - LZ - 12/6/2013
+ Version 0.0 - LZ - 12/6/2013
  ***************************************************/
 
 class Poll {
 
-	// Unique integer identifier for the poll
+	// Unique identifier for the poll, integer
 	private var $id;
 
 	// Question for the poll, string
