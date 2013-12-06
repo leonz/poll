@@ -3,6 +3,7 @@
  Database Class
  Manages database connections and queries.
  Version 0.0 - LZ - 12/6/2013
+ Based on: http://stackoverflow.com/questions/9651038/oop-database-connect-disconnect-class
  ***************************************************/
 
 class Database {
