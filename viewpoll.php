@@ -25,7 +25,10 @@ if ($poll == FALSE) {
 require_once('includes/header.php');
 
 
-
+// Test the database connection
+require_once('classes/database.php');
+$db = new Database();
+if ($db) echo "Database successfully connected!";
 
 
 // Print the choices for the poll
