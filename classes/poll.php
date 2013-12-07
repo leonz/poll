@@ -51,15 +51,26 @@ class Poll {
 
 	/** Saves this instance of Poll to the database, and updates the id */
 	public function save() {
-		// add a row to the polls table
-		// save the arrays using serialize()
-		// set the poll ID
+
+		// 1. Open connection to database
+		// 2. serialize choices and votes
+		// 3. create a new row using all properties
+		// 4. retrieve id of new row
+		// 5. set this->id to new id
+		// 6. return true 
 	}
 
 	/** Loads from the database the Poll with id and returns an array of its values */
 	public function load($id) {
-		// return an array of poll with id $id
-		// remember to unserialize() choices/votes
+		if ($id = "" || !is_numeric($id)) return 0;
+
+		// 1. Open connection to database
+		// 2. MYSQL escape $id
+		// 3. result = query (get row with $id)		
+		// 4. get each column as a single array
+		// 5. votes =  unserialize(votes)
+		// 6. choices = unserialize(choices)
+		// 7. return array
 	}
 
 
