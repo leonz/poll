@@ -18,7 +18,7 @@ class Database {
 		$this->password	= "";
 		$this->database	= "";
 
-		$this->db = mysqli_connect($this->host, $this->username, $this->$password, $this->database)
+		$this->db = mysqli_connect($this->host, $this->username, $this->password, $this->database)
 		or die('Error: ' . mysqli_error($this->db));
 		
 		return true;
@@ -33,12 +33,6 @@ class Database {
 		return $result;
 	}
 	
-	/** Closes the connection to the database */
-	public function __destruct() {
-		$mysqli->close($this->db)
-		OR die('There was a problem disconnecting from the database.');
-	}
-
 }
 
 ?>
