@@ -8,19 +8,19 @@
 class Poll {
 
 	// Unique identifier for the poll, integer
-	private var $id;
+	private $id;
 
 	// Question for the poll, string
-	private var $question;
+	private $question;
 
 	// Each one of the poll choices, array of strings
-	private var $choices = array(10);
+	private $choices = array(10);
 
 	// Corresponding vote values for each poll choice, array of integers
-	private var $votes = array(10);
+	private $votes = array(10);
 
 	/** Create a poll and initialize all of the fields */
-	public __construct($q, $c, $v) {
+	public function __construct($q, $c, $v) {
 		$this->question = $q;
 		$this->choices = c;
 		$this->votes = v;
