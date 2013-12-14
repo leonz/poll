@@ -10,10 +10,8 @@ require_once('classes/poll.php');
 
 $pollID = htmlspecialchars($_GET['id']);
 
-$p = new Poll(null,null,null);
-$poll = $p->load($pollID);
+$poll = Poll::load($pollID);
 
-echo $poll;
 
 // { $poll is an array of values extracted from the database
 //   or FALSE if pollID could not be found  }
@@ -26,15 +24,13 @@ if ($poll == FALSE) {
 }
 require_once('includes/header.php');
 
-// Print the choices for the poll
-for ($i = 0; $i < count($poll['choices']); $i++) {
-        if ($poll['choices'][$i] != '') {
-                echo $poll['choices'][$i] . " " . $poll['votes'][$i];
-        }
+for ($i = 0; $i < 10; $i++) {
+	if ($poll['choices'][$i] === "") break;
+	echo $poll['choices'][$i];
 }
 
+echo "COMPLETE";
 
-echo "This is proof that it's working! " .  $_GET['id'];
 
 require_once('includes/footer.php');
 
