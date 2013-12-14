@@ -13,13 +13,13 @@ class Database {
 	
 	/** Opens a connection the database */
 	public function __construct() {
-		$this->host	= "";
-		$this->username	= "";
-		$this->password	= "";
-		$this->database	= "";
+		$this->host	= "localhost";
+		$this->username	= "leondash_poll";
+		$this->password	= "%PisT;sk?8ZP";
+		$this->database	= "leondash_poll";
 
 		$this->db = mysqli_connect($this->host, $this->username, $this->password, $this->database)
-		or die('Error: ' . mysqli_error($this->db));
+		or die('Error: Could not connect to the database');
 		
 		return true;
 	}
@@ -32,6 +32,11 @@ class Database {
 		if (!$result) die('Invalid query: ' . mysqli_error($this->db));
 		return $result;
 	}
+	
+	public function getDB() {
+		return $this->db;
+	}
+
 	
 }
 

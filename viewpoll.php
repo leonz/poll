@@ -13,6 +13,8 @@ $pollID = htmlspecialchars($_GET['id']);
 $p = new Poll(null,null,null);
 $poll = $p->load($pollID);
 
+echo $poll;
+
 // { $poll is an array of values extracted from the database
 //   or FALSE if pollID could not be found  }
 
@@ -23,13 +25,6 @@ if ($poll == FALSE) {
         $title = $poll['question'];
 }
 require_once('includes/header.php');
-
-
-// Test the database connection
-require_once('classes/database.php');
-$db = new Database();
-if ($db) echo "Database successfully connected!";
-
 
 // Print the choices for the poll
 for ($i = 0; $i < count($poll['choices']); $i++) {

@@ -43,21 +43,20 @@ class Poll {
 		return $this->votes;
 	}
 
-	/** Convert the poll's unique ID into a 4+ digit URL identifier */
-	public function urlID() {
+	/** Convert a poll's sequential ID into a 4+ digit URL identifier */
+	public static function urlID() {
 		$largeID = $this->id + 239000;
-		return base_convert($largeID, 10, 62);
+		return base_convert($largeID, 10, 36);
 	}
 
-        /** Convert the poll's URL ID into its unique sequential ID */
-        public function id() {
-                $decreasedID = $this->id - 239000;
-                return base_convert($decreasedID, 62, 10);
+        /** Convert a URL ID into its sequential ID */
+        public static function sID($urlID) {
+                return base_convert($urlID, 36, 10) - 239000;
         }
 
 	// Database Methods
 
-	/** Saves this instance of Poll to the database, and updates the id
+	/** Saves this instance of Poll to the database, and return's the sequential id
 	 *  Precondition: All variables are already sanitized.
 	 */
 	public function save() {
@@ -66,22 +65,24 @@ class Poll {
 		$sVotes = serialize($this->votes);
 		
 		$query = "INSERT INTO Polls (Question, Choices, Votes)
-VALUES ($this->question, $sChoices, $sVotes)";
+VALUES ('$this->question', '$sChoices', '$sVotes')";
 
 		$db = new Database();
 	        $isSuccess = $db->query($query);	
-		$this->id = mysqli_insert_id();
-		
-		return $isSuccess;
+		if ($isSuccess === TRUE) {
+			return mysqli_insert_id($db->getDB());
+		} else {
+			return -1;
+		}
 	}
 
 	/** Loads from the database the Poll with id and returns an array
 	 *  of its values.  Precondition: All variables are already sanitized.
 	 */
-	public function load($urlID) {
-		if ($urlID = "" || !is_numeric($urlID)) return 0;
+	public static function load($urlID) {
+		if ($urlID = "" || !is_numeric($urlID)) return;
 		
-		$id = id($urlID); // reconvert
+		$id = self::sID($urlID); // reconvert
 		
 		$query = "SELECT * FROM Polls WHERE id='$id'";
 
