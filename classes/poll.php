@@ -88,6 +88,7 @@ VALUES ($this->question, $sChoices, $sVotes)";
 		$db = new Database();
 		if ($result = $db->query($query)) {
 			while ($row = mysqli_fetch_row($result)) {
+				if ($row[4] === FALSE) return FALSE; 
 				$pollInfo['question'] = $row[1];
 				$pollInfo['choices'] = unserialize($row[2]);
 				$pollInfo['votes'] = unserialize($row[3]); 
