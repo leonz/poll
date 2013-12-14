@@ -24,8 +24,8 @@ class Poll {
 	/** Create a poll, sanitize and initialize all of the fields */
 	public function __construct($q, $c, $v) {
 		$this->question = $q;
-		$this->choices = c;
-		$this->votes = v;
+		$this->choices = $c;
+		$this->votes = $v;
 	}
 	
 	/** Return this poll's question */
@@ -60,7 +60,7 @@ class Poll {
 	 *  Precondition: All variables are already sanitized.
 	 */
 	public function save() {
-
+		
 		$sChoices = serialize($this->choices);
 		$sVotes = serialize($this->votes);
 		
@@ -80,11 +80,9 @@ VALUES ('$this->question', '$sChoices', '$sVotes')";
 	 *  of its values.  Precondition: All variables are already sanitized.
 	 */
 	public static function load($urlID) {
-		if ($urlID = "" || !is_numeric($urlID)) return;
-		
-		$id = self::sID($urlID); // reconvert
-		
-		$query = "SELECT * FROM Polls WHERE id='$id'";
+		if ($urlID === "" || !ctype_alnum($urlID)) return;
+	
+		$query = 'SELECT * FROM Polls WHERE id=\'' . self::sID($urlID) . '\'';
 
 		$db = new Database();
 		if ($result = $db->query($query)) {
@@ -92,7 +90,7 @@ VALUES ('$this->question', '$sChoices', '$sVotes')";
 				if ($row[4] === FALSE) return FALSE; 
 				$pollInfo['question'] = $row[1];
 				$pollInfo['choices'] = unserialize($row[2]);
-				$pollInfo['votes'] = unserialize($row[3]); 
+				$pollInfo['votes'] = unserialize($row[3]);
 			}
 			mysqli_free_result($result);
 		}
