@@ -2,7 +2,7 @@
 /***************************************************
  Poll Class
  Defines the class skeleton for polls.
- Version 0.0 - LZ - 12/6/2013
+ Version 0.1 - LZ - 12/14/2013
  ***************************************************/
 
 require_once('database.php');
@@ -85,6 +85,7 @@ VALUES ('$this->question', '$sChoices', '$sVotes')";
 		$query = 'SELECT * FROM Polls WHERE id=\'' . self::sID($urlID) . '\'';
 
 		$db = new Database();
+		$pollInfo = 0;
 		if ($result = $db->query($query)) {
 			while ($row = mysqli_fetch_row($result)) {
 				if ($row[4] === FALSE) return FALSE; 

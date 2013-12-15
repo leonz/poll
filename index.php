@@ -1,9 +1,7 @@
 <?php
 $title = "Index Page";
 require("includes/header.php");
-
 echo "Hello World";
-
 
 /*
 

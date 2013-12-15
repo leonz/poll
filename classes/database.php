@@ -14,9 +14,9 @@ class Database {
 	/** Opens a connection the database */
 	public function __construct() {
 		$this->host	= "localhost";
-		$this->username	= "leondash_poll";
-		$this->password	= "%PisT;sk?8ZP";
-		$this->database	= "leondash_poll";
+		$this->username	= "leondash";
+		$this->password	= "password";
+		$this->database	= "poll";
 
 		$this->db = mysqli_connect($this->host, $this->username, $this->password, $this->database)
 		or die('Error: Could not connect to the database');
