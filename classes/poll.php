@@ -85,7 +85,7 @@ VALUES ('$this->question', '$sChoices', '$sVotes')";
 		$query = 'SELECT * FROM Polls WHERE id=\'' . self::sID($urlID) . '\'';
 
 		$db = new Database();
-		$pollInfo = 0;
+		$pollInfo = array();	
 		if ($result = $db->query($query)) {
 			while ($row = mysqli_fetch_row($result)) {
 				if ($row[4] === FALSE) return FALSE; 
@@ -95,7 +95,6 @@ VALUES ('$this->question', '$sChoices', '$sVotes')";
 			}
 			mysqli_free_result($result);
 		}
-
 		return $pollInfo;
 	}
 }

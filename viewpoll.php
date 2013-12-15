@@ -9,9 +9,8 @@
 require_once('classes/poll.php');
 
 if (!isset($_GET['id'])) {
-	header('Location: /poll/index.php');
+	header('Location: /poll/index.php?display=error');
 }
-	
 
 $pollID = htmlentities($_GET['id']);
 $poll = Poll::load($pollID);
@@ -20,7 +19,7 @@ $poll = Poll::load($pollID);
 //   or FALSE if pollID could not be found  }
 
 if ($poll == FALSE) {
-        $title = "We couldn't find the poll!";
+        header('Location: /poll/index.php?display=error');
 } else {
         $title = $poll['question'];
 }
