@@ -3,7 +3,7 @@
  View Poll
  Shows a poll specified by a unique ID, can be voted
  on depending on visitor history.
- Version 0.1 - LZ - 12/6/2013
+ Version 0.2 - LZ - 12/6/2013
  ***************************************************/
 
 require_once('classes/poll.php');
