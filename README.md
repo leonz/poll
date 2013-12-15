@@ -1,12 +1,19 @@
 Design Plan for "Make a Poll" Web App
-Version 1.1
+====================================
+
+Version 0.1
 
 Technologies Used:
 PHP
+
 MySQL
+
 JQuery
+
 AJAX
+
 HTML/CSS
+
 
 Basic Description:
 
