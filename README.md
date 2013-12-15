@@ -1,7 +1,7 @@
-Design Plan for "Make a Poll" Web App
-====================================
-
-Version 0.1
+Make My Poll Web App
+-------------------------------------
+Design Plan - Version 0.1
+To be licensed under the MIT License.
 
 Technologies Used:
 PHP
