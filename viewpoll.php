@@ -32,7 +32,7 @@
 
 	echo '<h1>' . $poll['question'] . '</h1>' . "\n";
 
-	if (isset($_GET['display']) && htmlentities($_GET['display']) === 'results') {
+	if (isset($_GET['display']) && htmlentities($_GET['display']) == 'results') {
 
 		// Show the voting results of the poll
 
@@ -49,9 +49,8 @@
 			echo '</div>' . "\n";
 		}
 
-	} else {
+	} else { // Show a form to allow the visitor to vote
 
-	// Show a form to allow the visitor to vote
 		echo '<form name="vote" method="post" action="processpoll.php?id=' . $pollID . '">' . "\n";
         
 	        for ($i = 0; $i < count($poll['choices']); $i++) {
@@ -73,11 +72,9 @@
 			echo '<input type="submit" value="Cast My Vote" />' . "\n"; 
 			echo '</form>' . "\n";
 
-
 	}
 
 	echo "COMPLETE";
-
 
 	require_once('includes/footer.php');
 
