@@ -92,6 +92,7 @@ VALUES ('$this->question', '$sChoices', '$sVotes')";
 				$pollInfo['question'] = $row[1];
 				$pollInfo['choices'] = unserialize($row[2]);
 				$pollInfo['votes'] = unserialize($row[3]);
+				$pollInfo['isRadio'] = $row[5];
 			}
 			mysqli_free_result($result);
 		}
