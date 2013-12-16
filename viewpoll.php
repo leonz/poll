@@ -30,7 +30,7 @@
 	
 	require_once('includes/header.php');
 
-	echo '<h1>' . $poll['question'] . '</h1>';
+	echo '<h1>' . $poll['question'] . '</h1>' . "\n";
 
 	if (isset($_GET['display']) && htmlentities($_GET['display']) === 'results') {
 
@@ -52,7 +52,9 @@
 	} else {
 
 	// Show a form to allow the visitor to vote
-                for ($i = 0; $i < count($poll['choices']); $i++) {
+		echo '<form name="vote" method="post" action="processpoll.php?id=' . $pollID . '">' . "\n";
+        
+	        for ($i = 0; $i < count($poll['choices']); $i++) {
                         if ($poll['choices'][$i] == "") break;
 			
 			$type = 'radio';
@@ -60,11 +62,16 @@
 				$type = 'checkbox';
 			}
 
+
                         echo '<div class="choice" id="choice' . $i . '">' . "\n";
 			echo '<input type="' . $type . '" name="choice" value="choice' . $i . '"> ';
                         echo $poll['choices'][$i];
                         echo '</div>' . "\n";
+
                 }
+
+			echo '<input type="submit" value="Cast My Vote" />' . "\n"; 
+			echo '</form>' . "\n";
 
 
 	}
