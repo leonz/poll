@@ -98,6 +98,28 @@ VALUES ('$this->question', '$sChoices', '$sVotes')";
 		}
 		return $pollInfo;
 	}
+
+        /** Increases by 1 the vote values in vote[$i] where $i is an array of indices  
+         *  Extracts the vote array, unserialize, update value, serialize, and update
+         */
+        public static function updateVotes($urlID, $list) {
+		
+		$pollInfo = self::load($urlID);
+
+                foreach($list as $i) {
+			// $i is decremented to return to proper value
+			// See comment in viewpoll.php for more info
+			$pollInfo['votes'][$i - 1]++;
+		}
+		
+		$sVotes = serialize($pollInfo['votes']);
+		$id = self::sID($urlID);
+                $query = "UPDATE Polls SET Votes='$sVotes' WHERE id='$id'";  
+
+                $db = new Database();
+		return $db->query($query);
+	}
+
 }
 
 ?>
