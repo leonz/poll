@@ -59,7 +59,7 @@ if (isset($_GET['display']) && htmlentities($_GET['display']) == 'results') {
 
 } else { // Show a form to allow the visitor to vote
 
-	echo '<form name="vote" method="post" action="process.php?id=' . $pollID . '">' . "\n";
+	echo '<form name="vote" method="post" action="vote.php?id=' . $pollID . '">' . "\n";
         
         for ($i = 0; $i < count($poll['choices']); $i++) {
 		if ($poll['choices'][$i] == "") break;

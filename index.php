@@ -1,7 +1,46 @@
 <?php
-$title = "Index Page";
+
+$title = "Create your own poll with Make My Poll!";
 require("includes/header.php");
-echo "Hello World";
+
+if (isset($_GET['display']) && htmlentities($_GET['display']) == "results") {
+	echo '<div id="error">There was an error trying to access that page.</div>';
+}
+
+?>
+
+<form name="create" method="post" action="create.php">
+
+Question: 
+<input type="text" name="question" id="question" /><br />
+
+
+Choice 0:
+<input type="text" name="choice_list[]" class="choice" value="" /><br />
+Choice 1:
+<input type="text" name="choice_list[]" class="choice" value="" /><br />
+Choice 2:
+<input type="text" name="choice_list[]" class="choice" value="" /><br />
+Choice 3:
+<input type="text" name="choice_list[]" class="choice" value="" /><br />
+Choice 4:
+<input type="text" name="choice_list[]" class="choice" value="" /><br />
+Choice 5:
+<input type="text" name="choice_list[]" class="choice" value="" /><br />
+Choice 6:
+<input type="text" name="choice_list[]" class="choice" value="" /><br />
+Choice 7:
+<input type="text" name="choice_list[]" class="choice" value="" /><br />
+Choice 8:
+<input type="text" name="choice_list[]" class="choice" value="" /><br />
+Choice 9:
+<input type="text" name="choice_list[]" class="choice" value="" /><br />
+
+<input type="submit" name="submit" value="Create my poll" />
+
+</form>
+<?php
+
 
 /*
 
