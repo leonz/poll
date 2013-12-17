@@ -10,7 +10,9 @@ require_once('classes/poll.php');
 
 if (!isset($_GET['id'])) {
 	header('Location: index.php?display=error');
+	exit;
 }
+
 
 // if a cookie is set that the user has already voted 
 // && display is not set to results
@@ -24,8 +26,14 @@ $poll = Poll::load($pollID);
 
 if ($poll == FALSE) {
 	header('Location: index.php?display=error');
+	exit;
 } else {
         $title = $poll['question'];
+}
+
+if (isset($_COOKIE["$pollID"]) && htmlentities($_GET['display']) != 'results') {
+	header('Location: viewpoll.php?id=' . $pollID . '&display=results');
+	exit;
 }
 	
 require_once('includes/header.php');
