@@ -1,4 +1,7 @@
 <?php
+/** Processes the vote casting for a poll */
+
+
 /********
 
 Goals for this page:
@@ -23,12 +26,12 @@ if (!isset($_POST['choice_list'])) {
 
 if (!empty($_POST['choice_list'])) {
 	require_once('classes/poll.php');
-	Poll::updateVotes($pollID, array_filter($_POST['choice_list']));
+	Poll::updateVotes($pollID, array_filter($_POST['choice_list'], 'is_numeric'));
+	header('Location: viewpoll.php?id=' . $pollID . '&display=results');
 }
 
 
 
-header('Location: viewpoll.php?id=' . $pollID . '&display=results');
  
 
 ?>

@@ -62,10 +62,7 @@ if (isset($_GET['display']) && htmlentities($_GET['display']) == 'results') {
 		}
 
 		echo '<div class="choice" id="choice' . $i . '">' . "\n";
-		// $i is incremented below to account for weird PHP behavior
-		// where 0 is not considered to be an integer during validation
-		// In updateVotes() the value is decremented again
-		echo '<input type="' . $type . '" name="choice_list[]" value="' . ($i + 1) . '"> ';
+		echo '<input type="' . $type . '" name="choice_list[]" value="' . $i . '"> ';
 		echo $poll['choices'][$i];
 		echo '</div>' . "\n";
 

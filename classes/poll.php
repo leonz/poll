@@ -107,9 +107,7 @@ VALUES ('$this->question', '$sChoices', '$sVotes')";
 		$pollInfo = self::load($urlID);
 
                 foreach($list as $i) {
-			// $i is decremented to return to proper value
-			// See comment in viewpoll.php for more info
-			$pollInfo['votes'][$i - 1]++;
+			$pollInfo['votes'][$i]++;
 		}
 		
 		$sVotes = serialize($pollInfo['votes']);
