@@ -14,9 +14,8 @@ if (isset($_POST['submit'])) {
 
 	// Check that there are no form errors
 
-	if (isset($_COOKIE["a"])) {
-//		$errors['cookie'] = 'You just created a poll! Please wait a few minutes before making another one.';
-		echo "cookie is set";
+	if (isset($_COOKIE["created"])) {
+		$errors['cookie'] = 'You just created a poll! Please wait a few minutes before making another one.';
 	}
 
         if (empty($form['question'])) {
@@ -43,9 +42,6 @@ CONTENT;
 
 	} else { // { No errors - submit the poll }
 
-		// Sanitize for MySQL insertion
-		// We remove '=' to reduce change of injection, will find a better method in the future
-		
 		require_once('classes/database.php');
 		$db = new Database();
 	
@@ -72,7 +68,18 @@ CONTENT;
 		header('Location: viewpoll.php?id=' . $pollID . '&display=created');
 
 		}
+} else { // { The form is not submitted - default view }
+
+	$formArea = <<<CONTENT
+The form will be placed here.
+CONTENT;
+
+
 }
+
+/**** EVERYTHING BELOW IS NOW DEPRECATED AND WILL BE REMOVED Dec 23 2013 ****/
+
+
 // check that at least two choice fields are filled
 // htmlentities() question and each choice
 // remove = from question and each choice
