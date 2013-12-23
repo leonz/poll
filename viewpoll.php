@@ -46,15 +46,21 @@ if (isset($_GET['display']) && htmlentities($_GET['display']) == 'results') {
 
 	$totalVotes = array_sum($poll['votes']);
 	for ($i = 0; $i < count($poll['choices']); $i++) {
-		if ($poll['choices'][$i] == "") break;
-	
-		$votePercentage = $poll['votes'][$i] / $totalVotes * 100;		
+		$votePercentage = 0;
+		if ($totalVotes > 0) {
+			$votePercentage = $poll['votes'][$i] / $totalVotes * 100;		
+		}
+		if ($poll['choices'][$i] != "") {
+			echo '<div class="choice" id="choice' . $i . '">' . "\n";
+			echo '<div class="vote-backdrop" style="width: ' . $votePercentage . '%">' . "\n";
+			echo $poll['choices'][$i] . ' - ' . $poll['votes'][$i] . ' Votes' . "\n";
+			echo '</div>' . "\n";
+			echo '</div>' . "\n";
+		}
+	}
 
-		echo '<div class="choice" id="choice' . $i . '">' . "\n";
-		echo '<div class="vote-backdrop" style="width: ' . $votePercentage . '%">' . "\n";
-		echo $poll['choices'][$i] . ' - ' . $poll['votes'][$i] . ' Votes' . "\n";
-		echo '</div>' . "\n";
-		echo '</div>' . "\n";
+	if (!isset($_COOKIE["$pollID"])) {
+		echo '<a href="viewpoll.php?id=' . $pollID . '">Click here to vote.</a>';
 	}
 
 } else { // Show a form to allow the visitor to vote
@@ -62,18 +68,16 @@ if (isset($_GET['display']) && htmlentities($_GET['display']) == 'results') {
 	echo '<form name="vote" method="post" action="vote.php?id=' . $pollID . '">' . "\n";
         
         for ($i = 0; $i < count($poll['choices']); $i++) {
-		if ($poll['choices'][$i] == "") break;
-			
 		$type = 'radio';
 		if ($poll['isRadio'] == 0) {
 			$type = 'checkbox';
 		}
-
-		echo '<div class="choice" id="choice' . $i . '">' . "\n";
-		echo '<input type="' . $type . '" name="choice_list[]" value="' . $i . '"> ';
-		echo $poll['choices'][$i];
-		echo '</div>' . "\n";
-
+		if ($poll['choices'][$i] != "") {
+			echo '<div class="choice" id="choice' . $i . '">' . "\n";
+			echo '<input type="' . $type . '" name="choice_list[]" value="' . $i . '"> ';
+			echo $poll['choices'][$i];
+			echo '</div>' . "\n";
+		}
 	}
 
 	echo '<input type="submit" value="Cast My Vote" />' . "\n"; 

@@ -37,6 +37,13 @@ class Database {
 		return $this->db;
 	}
 
+	/**
+	 * Return a string that is escaped for insertion into a database.
+	 * The '=' is removed as a measure against SQL injection - we will look into better methods.
+	 */
+	public function sanitize($str) {
+		return mysqli_real_escape_string($this->db, str_replace('=', '', $str));
+	}
 	
 }
 

@@ -20,12 +20,14 @@ class Poll {
 
 	// Corresponding vote values for each poll choice, array of integers
 	private $votes = array(10);
-
+	
+	private $radio;
 	/** Create a poll, sanitize and initialize all of the fields */
-	public function __construct($q, $c, $v) {
+	public function __construct($q, $c, $r) {
 		$this->question = $q;
 		$this->choices = $c;
-		$this->votes = $v;
+		$this->radio = $r;
+		$this->votes = array_fill(0, 10, 0);
 	}
 	
 	/** Return this poll's question */
@@ -44,9 +46,8 @@ class Poll {
 	}
 
 	/** Convert a poll's sequential ID into a 4+ digit URL identifier */
-	public static function urlID() {
-		$largeID = $this->id + 239000;
-		return base_convert($largeID, 10, 36);
+	public static function urlID($id) {
+		return base_convert($id + 239000, 10, 36);
 	}
 
         /** Convert a URL ID into its sequential ID */
@@ -64,11 +65,14 @@ class Poll {
 		$sChoices = serialize($this->choices);
 		$sVotes = serialize($this->votes);
 		
-		$query = "INSERT INTO Polls (Question, Choices, Votes)
-VALUES ('$this->question', '$sChoices', '$sVotes')";
-
 		$db = new Database();
-	        $isSuccess = $db->query($query);	
+		
+		$ssChoices = $db->sanitize($sChoices);
+		
+		$query = "INSERT INTO Polls (Question, Choices, Votes, isRadio)
+			  VALUES ('$this->question', '$ssChoices', '$sVotes', '$this->radio')";
+		
+	       	$isSuccess = $db->query($query);	
 		if ($isSuccess === TRUE) {
 			return mysqli_insert_id($db->getDB());
 		} else {

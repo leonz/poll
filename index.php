@@ -1,8 +1,7 @@
 <?php
 
-// USE HEREDOCS for each of the three scenarios
 
-/********** FORM IS SUBMITTED */
+// Form is submitted
 
 if (isset($_POST['submit'])) {
 
@@ -14,6 +13,11 @@ if (isset($_POST['submit'])) {
 	$form['choices'] = array_map('htmlentities', $_POST['choiceList']);  
 
 	// Check that there are no form errors
+
+	if (isset($_COOKIE["a"])) {
+//		$errors['cookie'] = 'You just created a poll! Please wait a few minutes before making another one.';
+		echo "cookie is set";
+	}
 
         if (empty($form['question'])) {
                 $errors['question'] = 'You must provide a question.';
@@ -30,23 +34,44 @@ if (isset($_POST['submit'])) {
 		foreach ($errors as $e) {
 			$errorMessages .= '<li>' . $e . '</li>' . "\n";
 		}
- 
+
 		$formArea = <<<CONTENT
 <ul>
 $errorMessages
 </ul>
 CONTENT;
-		
+
 	} else { // { No errors - submit the poll }
 
+		// Sanitize for MySQL insertion
+		// We remove '=' to reduce change of injection, will find a better method in the future
+		
+		require_once('classes/database.php');
+		$db = new Database();
+	
+		$sForm['question'] = $db->sanitize($form['question']);
+		
+		/* Form choices will be escaped AFTER serialization in classes/poll
+		for ($i = 0; $i < sizeof($form['choices']); $i++) {
+			$sForm['choices'][$i] = $db->sanitize($form['choices'][$i]);
+		}
+		*/
+
+		$isRadio = 1;
+		if (isset($_POST['type'])) {
+			$isRadio = 0;
+		}
+
 		require_once('classes/poll.php');
-
-		$p = new Poll($form['question'], $form['choices'], 0);
+		
+		$p = new Poll($sForm['question'], $form['choices'], $isRadio);
 		$id = $p->save();
+		$pollID = Poll::urlID($id);
 
-		echo $id;
+	        setcookie('a', "$pollID", time() + 60*5);
+		header('Location: viewpoll.php?id=' . $pollID . '&display=created');
 
-	}
+		}
 }
 // check that at least two choice fields are filled
 // htmlentities() question and each choice
