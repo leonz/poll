@@ -4,6 +4,50 @@
 
 /********** FORM IS SUBMITTED */
 
+if (isset($_POST['submit'])) {
+
+	$errors = array();
+	
+	// Make $form into a sanitized version of $_POST
+	
+	$form['question'] = htmlentities($_POST['question']);
+	$form['choices'] = array_map('htmlentities', $_POST['choiceList']);  
+
+	// Check that there are no form errors
+
+        if (empty($form['question'])) {
+                $errors['question'] = 'You must provide a question.';
+        }
+	
+	$count = count(array_diff($form['choices'], array('')));		
+	if ($count < 2) {
+		$errors['count'] = 'You must provide at least two choices.';
+	}
+
+	if (!empty($errors)) { // { There are errors }
+		$errormessages = "";
+
+		foreach ($errors as $e) {
+			$errorMessages .= '<li>' . $e . '</li>' . "\n";
+		}
+ 
+		$formArea = <<<CONTENT
+<ul>
+$errorMessages
+</ul>
+CONTENT;
+		
+	} else { // { No errors - submit the poll }
+
+		require_once('classes/poll.php');
+
+		$p = new Poll($form['question'], $form['choices'], 0);
+		$id = $p->save();
+
+		echo $id;
+
+	}
+}
 // check that at least two choice fields are filled
 // htmlentities() question and each choice
 // remove = from question and each choice
@@ -57,42 +101,44 @@ if (isset($_COOKIE['made-poll'])) {
 
 <p>Create your own poll and share it with your friends.  Get started now - no registration needed!</p>
 
-<form name="create" method="post" action="create.php">
+<form name="create" method="post" action="index.php">
 
 Question: 
-<input type="text" name="question" id="question" /><br />
+<input type="text" name="question" id="question"><br>
 
 Choice 0:
-<input type="text" name="choice_list[]" class="choice" value="" /><br />
+<input type="text" name="choiceList[]" class="choice" value=""><br>
 Choice 1:
-<input type="text" name="choice_list[]" class="choice" value="" /><br />
+<input type="text" name="choiceList[]" class="choice" value=""><br>
 Choice 2:
-<input type="text" name="choice_list[]" class="choice" value="" /><br />
+<input type="text" name="choiceList[]" class="choice" value=""><br>
 Choice 3:
-<input type="text" name="choice_list[]" class="choice" value="" /><br />
+<input type="text" name="choiceList[]" class="choice" value=""><br>
 Choice 4:
-<input type="text" name="choice_list[]" class="choice" value="" /><br />
+<input type="text" name="choiceList[]" class="choice" value=""><br>
 Choice 5:
-<input type="text" name="choice_list[]" class="choice" value="" /><br />
+<input type="text" name="choiceList[]" class="choice" value=""><br>
 Choice 6:
-<input type="text" name="choice_list[]" class="choice" value="" /><br />
+<input type="text" name="choiceList[]" class="choice" value=""><br>
 Choice 7:
-<input type="text" name="choice_list[]" class="choice" value="" /><br />
+<input type="text" name="choiceList[]" class="choice" value=""><br>
 Choice 8:
-<input type="text" name="choice_list[]" class="choice" value="" /><br />
+<input type="text" name="choiceList[]" class="choice" value=""><br>
 Choice 9:
-<input type="text" name="choice_list[]" class="choice" value="" /><br />
+<input type="text" name="choiceList[]" class="choice" value=""><br>
 
-<input type="checkbox" name="type" value"checkbox" /> Allow people to vote for multiple choices?<br />
+<input type="checkbox" name="type" value"checkbox"> Allow people to vote for multiple choices?<br>
 
 
-<input type="submit" name="submit" value="Make My Poll!" />
+<input type="submit" name="submit" value="Make My Poll!">
 
 </form>
 
 <?php
 
 }
+
+echo $formArea;
 
 ?>
 <?php
