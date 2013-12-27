@@ -81,11 +81,11 @@ if (isset($_POST['submit'])) {
 		}
 
 		$formArea = <<<CONTENT
-<ul>
+<ul id="error">
 $errorMessages
 </ul>
 
-<form class="form" name="create" method="post" action="index.php">
+<form id="create_form" name="create" method="post" action="index.php">
 
 Question:
 <input type="text" name="question" id="question" value="{$form['question']}"><br>
@@ -119,7 +119,7 @@ CONTENT;
 } else { // { The form is not submitted - default view }
 
 	$formArea = <<<CONTENT
-<form class="form" name="create" method="post" action="index.php">
+<form id="create_form" name="create" method="post" action="index.php">
 
 Question:
 <input type="text" name="question" id="question"><br>
