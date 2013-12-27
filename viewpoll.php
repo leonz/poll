@@ -46,7 +46,7 @@ if (isset($_GET['display']) && htmlentities($_GET['display']) == 'results') {
 
 	$totalVotes = array_sum($poll['votes']);
 	for ($i = 0; $i < count($poll['choices']); $i++) {
-		$votePercentage = 0;
+		$votePercentage = 100;
 		if ($totalVotes > 0) {
 			$votePercentage = $poll['votes'][$i] / $totalVotes * 100;		
 		}
@@ -83,12 +83,17 @@ if (isset($_GET['display']) && htmlentities($_GET['display']) == 'results') {
 	echo '<input type="submit" value="Cast My Vote" />' . "\n"; 
 	echo '</form>' . "\n";
 	
-	// If visitors are allowed to view the results without voting:
+	// Future feature -> If visitors are allowed to view the results without voting:
+	echo '<div id="results-link">' . "\n";
 	echo '<a href="viewpoll.php?id=' . $pollID . '&display=results">View Poll Results</a>';
-		
+	echo '</div>' . "\n";	
 }
-
-require_once('includes/footer.php');
-
 ?>
 
+<div id="ad">
+Make your own poll with <a href="index.php">Make My Poll</a>!
+</div>
+
+<?php
+require_once('includes/footer.php');
+?>

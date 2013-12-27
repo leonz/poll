@@ -20,8 +20,10 @@ class Poll {
 
 	// Corresponding vote values for each poll choice, array of integers
 	private $votes = array(10);
-	
+
+	// 1 if is a radio form, 0 if is a checkbox form
 	private $radio;
+	
 	/** Create a poll, sanitize and initialize all of the fields */
 	public function __construct($q, $c, $r) {
 		$this->question = $q;
@@ -72,7 +74,7 @@ class Poll {
 		$query = "INSERT INTO Polls (Question, Choices, Votes, isRadio)
 			  VALUES ('$this->question', '$ssChoices', '$sVotes', '$this->radio')";
 		
-	       	$isSuccess = $db->query($query);	
+		$isSuccess = $db->query($query);	
 		if ($isSuccess === TRUE) {
 			return mysqli_insert_id($db->getDB());
 		} else {

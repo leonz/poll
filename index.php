@@ -1,9 +1,11 @@
 <?php
-// Form is submitted
 
+/** Remove any '=' signs and convert HTML characters of a string */
 function quickSanitize($str) {
 	return htmlentities(str_replace('=', '', $str));
 }
+
+// Begin form handling
 
 if (isset($_POST['submit'])) {
 
@@ -54,7 +56,6 @@ if (isset($_POST['submit'])) {
 			next($previousVals);
 		}
 
-
 		// Prepopulate visible textboxes from previous submission values 
 		// Always make visible at least three textboxes
 
@@ -94,7 +95,6 @@ $hiddenFields
 
 <input type="checkbox" name="type" {$checked}> Allow people to vote for multiple choices?<br>
 
-
 <input type="submit" name="submit" class="submit" value="Make My Poll!">
 
 CONTENT;
@@ -106,14 +106,7 @@ CONTENT;
 	
 		$sForm['question'] = $db->sanitize($form['question']);
 		
-		/* Form choices will be escaped AFTER serialization in classes/poll
-		for ($i = 0; $i < sizeof($form['choices']); $i++) {
-			$sForm['choices'][$i] = $db->sanitize($form['choices'][$i]);
-		}
-		*/
-
 		require_once('classes/poll.php');
-		
 		$p = new Poll($sForm['question'], $form['choices'], $form['isRadio']);
 		$id = $p->save();
 		$pollID = Poll::urlID($id);
@@ -121,7 +114,8 @@ CONTENT;
 	        setcookie('created', "$pollID", time() + 60*5);
 		header('Location: viewpoll.php?id=' . $pollID . '&display=created');
 
-		}
+	}
+
 } else { // { The form is not submitted - default view }
 
 	$formArea = <<<CONTENT
@@ -156,52 +150,15 @@ Choice 9:
 
 <input type="checkbox" name="type"> Allow people to vote for multiple choices?<br>
 
-
 <input type="submit" name="submit" class="submit" value="Make My Poll!">
 
 </form>
 
 CONTENT;
 
-
 }
 
-/**** EVERYTHING BELOW IS NOW DEPRECATED AND WILL BE REMOVED Dec 23 2013 ****/
-
-
-// check that at least two choice fields are filled
-// htmlentities() question and each choice
-// remove = from question and each choice
-
-// is the form successful?
-
-// mysqlescaperealstrings and submit the poll to the database
-// create a made-poll cookie
-// extract the new poll's id
-// forward to viewpoll.php?id=urlID
-
-
-// is the form NOT successful?
-
-// show errors that it wasn't successful
-// populate form with previous fields
-// show choice boxes if they are populated, hide if not
-// only fill the top choice boxes? (push all answers up)
-
-/******************8
-
-for each filled answer in array of choices_list, create a visible textbox and ++ variable
-hide 10 - variable textboxes and include link
-
-*/
-
-// is the form not even submitted?
-
-// check for a cookie that a poll wasn't recently made
-// check for the display=error to create an error banner
-// display the poll form with 3 textboxes, 7 hidden 
-
-
+// Begin page content
 
 $title = 'Create your own poll with Make My Poll!';
 require('includes/header.php');
@@ -209,7 +166,6 @@ require('includes/header.php');
 if (isset($_GET['display']) && htmlentities($_GET['display']) == 'error') {
 	echo '<div id="error">There was an error trying to access that page.</div>';
 }
-
 ?>
 
 <h1>Make My Poll</h1>

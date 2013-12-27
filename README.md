@@ -1,15 +1,12 @@
 Make My Poll Web App
 -------------------------------------
-Design Plan - Version 0.1 <br />
 To be licensed under the MIT License.
 
 Technologies Used:
 * PHP
 * MySQL
-* JQuery
-* AJAX
 * HTML/CSS
-
+* JQuery
 
 Basic Description:
 

@@ -33,6 +33,7 @@ class Database {
 		return $result;
 	}
 	
+	/** Return the current database connection */	
 	public function getDB() {
 		return $this->db;
 	}
